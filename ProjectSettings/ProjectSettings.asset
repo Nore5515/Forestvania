@@ -4,7 +4,11 @@
 PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 22
+<<<<<<< HEAD
   productGUID: 18f001d503ec542d5a394eb74d50b495
+=======
+  productGUID: 9cc6f91843be5ca44a85dc0799d84e9e
+>>>>>>> e5939cec03d415bc7366311e9135d2af76bb0706
   AndroidProfiler: 0
   AndroidFilterTouchesWhenObscured: 0
   AndroidEnableSustainedPerformanceMode: 0
@@ -13,7 +17,11 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
+<<<<<<< HEAD
   productName: Nature_Metroidvania
+=======
+  productName: ForestVania
+>>>>>>> e5939cec03d415bc7366311e9135d2af76bb0706
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -464,9 +472,13 @@ PlayerSettings:
   switchPlayerConnectionEnabled: 1
   switchUseNewStyleFilepaths: 0
   switchUseMicroSleepForYield: 1
+<<<<<<< HEAD
   switchEnableRamDiskSupport: 0
   switchMicroSleepForYieldTime: 25
   switchRamDiskSpaceSize: 12
+=======
+  switchMicroSleepForYieldTime: 25
+>>>>>>> e5939cec03d415bc7366311e9135d2af76bb0706
   ps4NPAgeRating: 12
   ps4NPTitleSecret: 
   ps4NPTrophyPackPath: 
@@ -608,7 +620,10 @@ PlayerSettings:
   metroFTAName: 
   metroFTAFileTypes: []
   metroProtocolName: 
+<<<<<<< HEAD
   vcxProjDefaultLanguage: 
+=======
+>>>>>>> e5939cec03d415bc7366311e9135d2af76bb0706
   XboxOneProductId: 
   XboxOneUpdateKey: 
   XboxOneSandboxId: 
