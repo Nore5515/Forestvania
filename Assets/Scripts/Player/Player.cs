@@ -42,14 +42,25 @@ public class Player : MonoBehaviour
     private float jumpWallDistX = 0; //Distance between player and wall
     private bool limitVelOnWallJump = false; //For limit wall jump distance with low fps
 
-    public bool jump;
-    public bool dash;
+    private bool jump;
+    private bool dash;
 
-    [Header("Events")]
+    [Header("Attack Stuff")]
+    public float dmgValue = 4;
+    public GameObject throwableObject;
+    public Transform attackCheck;
+    public bool canAttack = true;
+    public bool isTimeToCheck = false;
+
+    public GameObject cam;
+
+    // Ability Locks go here
+    [Header("Ability Locks")]
     [Space]
-
-    public UnityEvent OnFallEvent;
-    public UnityEvent OnLandEvent;
+    public bool dashLocked;
+    public bool attackLocked;
+    public bool projectileLocked;
+    public bool doubleJumpLocked;
 
     [System.Serializable]
     public class BoolEvent : UnityEvent<bool> { }
@@ -57,12 +68,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-
-        if (OnFallEvent == null)
-            OnFallEvent = new UnityEvent();
-
-        if (OnLandEvent == null)
-            OnLandEvent = new UnityEvent();
     }
 
 
@@ -79,16 +84,67 @@ public class Player : MonoBehaviour
             jump = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && !dashLocked)
         {
             dash = true;
         }
     }
 
+    // ====================================================
+    // Attack Stuff
+    // ====================================================
+    private void DoAttacks()
+    {
+        // PLEASE NOTE
+        // Attack works, there's just no visual feedback.
+        if (Input.GetKeyDown(KeyCode.X) && canAttack && !attackLocked)
+        {
+            canAttack = false;
+            StartCoroutine(AttackCooldown());
+        }
+
+        if (Input.GetKeyDown(KeyCode.V) && !projectileLocked)
+        {
+            GameObject throwableWeapon = Instantiate(throwableObject, transform.position + new Vector3(transform.localScale.x * 0.5f, -0.2f), Quaternion.identity) as GameObject;
+            Vector2 direction = new Vector2(transform.localScale.x, 0);
+            throwableWeapon.GetComponent<ThrowableWeapon>().direction = direction;
+            throwableWeapon.name = "ThrowableWeapon";
+        }
+    }
+
+    IEnumerator AttackCooldown()
+    {
+        yield return new WaitForSeconds(0.25f);
+        canAttack = true;
+    }
+
+    public void DoDashDamage()
+    {
+        dmgValue = Mathf.Abs(dmgValue);
+        Collider2D[] collidersEnemies = Physics2D.OverlapCircleAll(attackCheck.position, 0.9f);
+        for (int i = 0; i < collidersEnemies.Length; i++)
+        {
+            if (collidersEnemies[i].gameObject.tag == "Enemy")
+            {
+                if (collidersEnemies[i].transform.position.x - transform.position.x < 0)
+                {
+                    dmgValue = -dmgValue;
+                }
+                collidersEnemies[i].gameObject.SendMessage("ApplyDamage", dmgValue);
+                cam.GetComponent<CameraFollow>().ShakeCamera();
+            }
+        }
+    }
+    // ====================================================
+    // End Attack Stuff
+    // ====================================================
+
     private void FixedUpdate()
     {
         bool wasGrounded = m_Grounded;
         m_Grounded = false;
+
+        DoAttacks();
 
         // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
         // This can be done using layers instead but Sample Assets will not overwrite your project settings.
@@ -99,7 +155,6 @@ public class Player : MonoBehaviour
                 m_Grounded = true;
             if (!wasGrounded)
             {
-                OnLandEvent.Invoke();
                 if (!m_IsWall && !isDashing)
                     particleJumpDown.Play();
                 canDoubleJump = true;
@@ -112,7 +167,6 @@ public class Player : MonoBehaviour
 
         if (!m_Grounded)
         {
-            OnFallEvent.Invoke();
             Collider2D[] collidersWall = Physics2D.OverlapCircleAll(m_WallCheck.position, k_GroundedRadius, m_WhatIsGround);
             for (int i = 0; i < collidersWall.Length; i++)
             {
@@ -200,7 +254,8 @@ public class Player : MonoBehaviour
                 particleJumpDown.Play();
                 particleJumpUp.Play();
             }
-            else if (!m_Grounded && jump && canDoubleJump && !isWallSliding)
+            // Double Jump check here
+            else if (!m_Grounded && jump && canDoubleJump && !isWallSliding && !doubleJumpLocked)
             {
                 canDoubleJump = false;
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, 0);
