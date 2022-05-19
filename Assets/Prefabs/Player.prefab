@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7453575128141115350}
-  - component: {fileID: 7419235144631649256}
+  - component: {fileID: 4877085580573120962}
   - component: {fileID: 7319551449271622898}
   - component: {fileID: 7481789549151336492}
   - component: {fileID: 7465495112646782232}
   - component: {fileID: 7369355649946041684}
-  - component: {fileID: 4877085580573120962}
   m_Layer: 1
   m_Name: Player
   m_TagString: Player
@@ -41,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7419235144631649256
+--- !u!114 &4877085580573120962
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,16 +49,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 7450081684412310620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9955788a5eaffa49a9297f38eaa6202, type: 3}
+  m_Script: {fileID: 11500000, guid: ca79db90afc12425c8daf821df2f4d9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_JumpForce: 850
+  m_MovementSmoothing: 0.05
+  m_AirControl: 1
+  m_WhatIsGround:
+    serializedVersion: 2
+    m_Bits: 1
+  m_GroundCheck: {fileID: 7453415652095338708}
+  m_WallCheck: {fileID: 7453829346838526824}
+  runSpeed: 40
+  canDoubleJump: 1
+  m_DashForce: 25
+  life: 10
+  invincible: 0
+  particleJumpUp: {fileID: 7323247330897041388}
+  particleJumpDown: {fileID: 7323480603548935494}
   dmgValue: 4
-  throwableObject: {fileID: 5532974359214069763, guid: 340067e8e5a097546ad175f1d00a6ece, type: 3}
-  attackCheck: {fileID: 7453283950383031568}
-  animator: {fileID: 0}
+  throwableObject: {fileID: 0}
+  attackCheck: {fileID: 0}
   canAttack: 1
   isTimeToCheck: 0
   cam: {fileID: 0}
+  dashLocked: 1
+  attackLocked: 0
+  projectileLocked: 0
 --- !u!212 &7319551449271622898
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -145,8 +161,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.18}
-  m_Size: {x: 0.65, y: 1.7}
+  m_Offset: {x: -0.030534029, y: 0.003204167}
+  m_Size: {x: 0.5889319, y: 1.3335918}
   m_Direction: 0
 --- !u!82 &7369355649946041684
 AudioSource:
@@ -244,41 +260,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &4877085580573120962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7450081684412310620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca79db90afc12425c8daf821df2f4d9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_JumpForce: 850
-  m_MovementSmoothing: 0.05
-  m_AirControl: 1
-  m_WhatIsGround:
-    serializedVersion: 2
-    m_Bits: 1
-  m_GroundCheck: {fileID: 7453415652095338708}
-  m_WallCheck: {fileID: 7453829346838526824}
-  runSpeed: 40
-  canDoubleJump: 1
-  m_DashForce: 25
-  life: 10
-  invincible: 0
-  particleJumpUp: {fileID: 7323247330897041388}
-  particleJumpDown: {fileID: 7323480603548935494}
-  jump: 0
-  dash: 0
-  OnFallEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnLandEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &7450105795244763574
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +284,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450105795244763574}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.35, y: -0.3, z: 0}
+  m_LocalPosition: {x: 0.316, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7453575128141115350}
@@ -333,7 +314,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450335997548764970}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.09, z: 0}
+  m_LocalPosition: {x: 0, y: -0.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7453575128141115350}
@@ -365,7 +346,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450404376422622830}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.06, z: 0}
+  m_LocalPosition: {x: 0, y: -0.91499996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7453575128141115350}
@@ -5237,7 +5218,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450493097301293634}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.414, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7453575128141115350}
@@ -5269,7 +5250,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7450601885515977702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.01, z: 0}
+  m_LocalPosition: {x: 0, y: -0.865, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7453575128141115350}
